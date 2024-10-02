@@ -4,6 +4,7 @@ class Calculator():
     firstNum = 0
     secondNum = 0
     operator = ''
+    answer = 0
     def __init__(self, mainString):
         self.mainString = mainString
                 
@@ -30,27 +31,42 @@ class Calculator():
 
     def returnAnser(self):
         op = self.operator
-        match op:
-            case '+':
-                print(self.firstNum + self.secondNum)
-            case '-':
-                print(self.firstNum - self.secondNum)
-            case '*':
-                print(self.firstNum * self.secondNum)
-            case '/':
-                print(self.firstNum / self.secondNum)
-            case '**':
-                print(self.firstNum ** self.secondNum)
-            case '%':
-                print(self.firstNum % self.secondNum)
-            case _:
-                print("Invalid operator")
-
-                
+        try:
+            match op:
+                case '+':
+                    self.answer = self.firstNum + self.secondNum
+                    print(self.answer)
+                case '-':
+                    self.answer = self.firstNum - self.secondNum
+                    print(self.answer)
+                case '*':
+                    self.answer = self.firstNum * self.secondNum
+                    print(self.answer)
+                case '/':
+                    self.answer = self.firstNum / self.secondNum
+                    print(self.answer)
+                case '**':
+                    self.answer = self.firstNum ** self.secondNum
+                    print(self.answer)
+                case '%':
+                    self.answer = self.firstNum % self.secondNum
+                    print(self.answer)
+                case _:
+                    print("Invalid operator")
+            return True
+        except Exception as e:
+            print("Probably u tried to devine by 0, u can't")
+            return False
+        
+    def addInFile(self):
+        with open('history.txt', 'a+') as f:
+            inFile = self.mainString + " = " + str(self.answer) + "\n"
+            f.write(inFile)      
     def run(self):
         if(self.validate()):
-            self.returnAnser()
-
+            if(self.returnAnser()):
+                self.addInFile()
+                
 
 
 while True:
